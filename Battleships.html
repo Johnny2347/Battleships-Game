@@ -1,0 +1,261 @@
+<html> <!--Html tag to contain code for structure of page.-->
+<div align="center"> 
+	<head>
+	BattleShips <!--Div tag creates a divison to contain the Battleships heading which displays at top of page, div is aligned to center for better aesthetics-->
+	</head>
+	</div>
+	
+
+	<script language="Javascript"> // Sets scripting language to Javascript
+	// initialize variables, sets  counters and scores to zero and playGame false, ensures user cannot interact with enemy grid until player grid or button clicked and playGame true. 
+	var sizeOfGrid=16; 
+	counter=0;
+	eCounter=0; 
+	score=0;
+	EnemyScore=0;
+	playGame=false;
+	</script> 
+	
+	<!--Script tag closed to add more html, table tag, tr and td are used to create a table to hold both grids, this makes them display in the cetner page on above the other.-->
+	
+	<table align="center" border="1">
+
+
+	
+	<tr>
+	<td colspan="2" align="center">
+	
+		<script language="Javascript"> //Sets language back into java script.
+		
+		//Creates 4 new arrays containing 16 place holders, as grid size is 16.
+		var gridLocations= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+		var shipLocations= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+		
+		var gridLocationsEnemy = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+		var shipLocationsEnemy = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+		
+		//Creates the grids, play and replay button, prints rules and grid labels again
+		function createGrids(){
+		while (eCounter <10){ //Loop will repeat 10 times, Enemy places one ship each time in random location.
+		var EnemyShipPosition = Math.floor(Math.random() *15); //Makes EnemyShipPosition a random number between 0 and 15.
+		shipLocationsEnemy[EnemyShipPosition]=1; //EnemyShipPositon is used as the index in shipLocationsEnemy to be set to 1.
+		eCounter++ //Increment counter.
+		}
+		
+		
+		//Writes to the screen the play button, sets its height and width, when play button clicked the function 'flip' is called, i is passed into the function.
+		document.write("<img class='playButton',i, src='play-vector.jpg' height=60 width=160 onclick='flip(",i,");'>"); //Starts game and allows users to place ships when clicked.
+		document.write("<img src='replay.jpg' height=60 width=120 onclick='replay()'>"); //Writes replay button to screen, sets height and width, when clicked calls replay function.
+		document.write("<br>")
+		document.write("<br>") //Breakpoints added for a clearer layout.
+		
+		//Prints rules to the screen as well as PLAYER label for grid, adds breakpoints.
+		document.write("Rules: The player can place up to 7 ships, place your ships then start choosing enemy <br> squares to attack. The enemy will choose squares from your grid, if you hit an enemy ship you get a point, <br> if the enemy hits you they get a point, first to 7 points wins.<br><br>")
+		document.write("PLAYER","<br>")
+		document.write("<br>")
+		
+		//Creates player grid using images based on sizeOfGrid, writes 4 squares then goes to next line, makes 4 by 4 grid, when square clicked on calls flip function, gives image squares their id.
+		for (var i=0; i < sizeOfGrid; i++) { 
+			document.write("<img class='waterCells' id='player",i,"' src='abstract-textured-backgound.jpg' height=80 width=80 onclick='flip(",i,");'>");
+			if(i%4==3){
+			document.write("<br>")
+			
+		
+			}
+		}
+		
+		//Writes ENEMY label for grid to screen, adds breakpoint.
+		document.write("ENEMY")
+		document.write("<br>")
+		
+		
+		//Creates enemy grid using images the same way as player grid, enemy squares are given a different id, enemy squares call function enemy when clicked.
+		for (var e=0; e < sizeOfGrid; e++) { 
+			document.write("<img class='waterCellsE' id='enemy",e,"' src='abstract-textured-backgound.jpg' height=80 width=80 onclick='enemy(",e,");'>");
+			if(e%4==3){
+			document.write("<br>")
+			
+						//Breakpoints for spacing
+			}
+		}
+		
+		document.write("<br>")
+		}
+		
+		
+		//Starts game and allows user to choose where to place ships.
+		function flip(squareid){
+		play=true; //Play is set to true when clicked, meaning enemy grid can be interacted with
+									
+		
+		if (play){
+		
+		
+		//Loop runs 7 times, user can place one ship each time, Choice is used as index in shipLocations to set to 1.
+		while (counter<7){  
+		Choice=parseInt(prompt("Enter location for ship:",0));
+		shipLocations[Choice]=1;
+	
+		//If the location the user chose is empty, a temp object is created that gets player and choice, the grid location square id is set to 1.
+		if (gridLocations[Choice]==0){
+		tempobj=document.getElementById("player"+Choice); 
+		gridLocations[squareid]=1;  //Places a ship image in users chosen squares
+			if (shipLocations[Choice]==1){					
+			tempobj.src="Ship.png"
+			}
+		}	
+		
+			
+		counter++ //Increments counter
+		
+		}
+	
+		if (gridLocations[squareid]==0){		//If an empty square is clicked on a blank image is revealed there.
+			tempobj=document.getElementById("player"+squareid); 
+			gridLocations[squareid]=1;
+			if (shipLocations[squareid]==1){					
+			
+			
+			}
+			else {
+			tempobj.src="blank.jpg" //also flips
+			}
+		}
+		else { alert("already chosen");} //If a square is clicked twice already chosen alert is sent out.
+		}
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		//Resets arrays, resets all counters and scores to zero, sets playGame back to true, clears the screen then calls createGrids() function.
+		function replay(){
+		var gridLocations= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+		var shipLocations= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+		
+		var gridLocationsEnemy = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+		var shipLocationsEnemy = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+		
+			
+		counter=0;
+		eCounter=0; 
+		score=0;
+		EnemyScore=0;
+		playGame=true;
+		document.body.innerHTML = ''; //Douew Maan, 2010. Stack overflow forum answer [online]. Stack Overflow. Available at: https://stackoverflow.com/questions/2250589/does-document-body-innerhtml-clear-the-web-page [27/04/2026]. I used a
+										//short snippet of code from stack overflow to clear my page when the reset button was clicked.
+		createGrids()
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		//function called when enemy square clicked, if ship in square, explosion, if no ship blank square.
+		function enemy(squareid){
+		if (play){
+		if (gridLocationsEnemy[squareid]==0){
+			tempobj=document.getElementById("enemy"+squareid); 
+			gridLocationsEnemy[squareid]=1;
+		
+			if (shipLocationsEnemy[squareid]==1){
+			tempobj.src="OIP.webp";					//If ship hit explosion image drawn score increased and alert sent out.
+			alert("You have hit an enemys ship!")
+			score++;
+			alert("Your score is:"+score)
+			}
+			
+			
+		
+			else{
+			alert("You missed, you did not hit any enemy ships.") //If ship missed alert sent out and blank image revealed, no score change.
+			tempobj.src="blank.jpg";
+			}
+			
+
+		
+		}
+		}
+		
+		
+		else{
+		alert("already chosen"); //If enemy square clicked twice, already chosen alert sent out.
+		}
+		
+		
+		
+		var EnemyChoice = Math.floor(Math.random() *15);	//Enemy chooses a random number from 0 to 15, the number it chooses is the index of the player square it attacks.
+		
+		if (shipLocations[EnemyChoice]==1){
+			tempobj=document.getElementById("player"+EnemyChoice); 
+			gridLocations[squareid]=1;	
+			if (shipLocations[EnemyChoice]==1){ //If there is a ship (1) in enemys chosen location					
+				tempobj.src="OIP.webp"; //Draws explosion image
+			
+			}
+		
+		
+		
+		alert("The enemy has hit one of your ships")
+		EnemyScore++; //Alert sent out and enemy score increased.
+		alert("Enemy score is:"+EnemyScore)
+		}
+		
+				
+		else{
+		alert("The enemy missed, none of your ships were hit.") //If enemy misses alert sent out, no score change.
+
+		}
+		
+		if (score>=7 && EnemyScore>=7){alert("Draw! Press replay button to try again") //If player and enemy both get to 7, draw alert sent out, play set to false.
+		play=false;
+		
+		
+		}
+		
+		
+		if (score>=7){alert("You have reached a score of 7! You win, press replay button to play again") //If player reaches 7 win alert sent out, play set to false.
+		play=false;
+		
+		
+
+		}
+		
+		if(EnemyScore>=7){alert("Enemy reached a score of 7, YOU LOSE! Press replay button to try again") //If enemy reaches 7, loss alert sent out and play set to false.
+		play=false;
+		
+		}
+		
+		
+	
+		}
+	
+		
+	
+	
+
+	
+		alert("Press the play button or your grid to start") //Alert telling user how to start game.
+		createGrids() //CreateGrids function called to draw everything needed to play.
+		//Html tags are closed below.
+	</script>
+	
+	</td>
+	</tr>
+</table>
+</html>
+
+
